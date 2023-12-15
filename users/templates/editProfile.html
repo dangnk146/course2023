@@ -1,0 +1,121 @@
+{% extends 'index.html' %}
+{% block title %}
+<title>Sửa profile | Course2023</title>
+{% endblock %}
+
+{% block body %}
+
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-8 col-md-6">
+            <div class="w-100 box shadow">
+                <div class="displays p-5 w-100">
+                    <h2 class="text-center">Sửa thông tin cá nhân</h2>
+                    <div class="infowrapper">
+                        <form method="post" action="" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row my-2">
+                                <div class="col-6">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form3Example1">Tên</label>
+                                        <input type="text" name="firstname" value="{{data.user.first_name}}"
+                                            id="form3Example1" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form3Example1">Họ</label>
+                                        <input type="text" name="lastname" value="{{data.user.last_name}}"
+                                            id="form3Example1" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row my-2">
+                                <div class="col-8 my-2">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form3Example1">Email Address</label>
+                                        <input type="email" name="email" id="form3Example1" value="{{data.user.email}}"
+                                            class="form-control" disabled />
+                                    </div>
+                                </div>
+                                <div class="col-8">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form3Example1">Username</label>
+                                        <input type="text" name="username" value="{{data.user.username}}"
+                                            id="form3Example1" class="form-control" disabled/>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row my-2">
+
+                                <div class="col-12 my-2">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form3Example1">Liên hệ</label>
+                                        <input type="text" name="contact" value="{{data.contact}}" id="form3Example1"
+                                            class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="col-12 my-2">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form3Example1">Địa chỉ</label>
+                                        <input type="text" name="address" value="{{data.address}}" id="form3Example1"
+                                            class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-outline">
+                                    <label class="form-label" for="form3Example1">Enter Date of Birth</label>
+                                    <input type="date" name="dob" id="dobform3Example1" class="form-control">
+                                </div>
+                                
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        var dobValue = "{{ data.dob }}"; // Lấy giá trị từ data
+                                        var formattedDate = formatDate(dobValue);
+                                        document.getElementById("dobform3Example1").value = formattedDate;
+                                    });
+                                
+                                    function formatDate(inputDate) {
+                                        var date = new Date(inputDate);
+                                        var year = date.getFullYear();
+                                        var month = (date.getMonth() + 1).toString().padStart(2, '0'); // Chuyển đổi sang 2 chữ số
+                                        var day = date.getDate().toString().padStart(2, '0'); // Chuyển đổi sang 2 chữ số
+                                        return year + '-' + month + '-' + day;
+                                    }
+                                </script>
+                                                             
+
+                                <div class="form-group col-md-6">
+                                    <label for="formFile" class="form-label">Ảnh đại diện</label>
+                                    <input class="form-control" name="image" value="{{data.image}}" type="file"
+                                        id="formFile">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    {% if data.image %}
+                            <img src="{{data.image.url}}" alt="mdo" width="32" height="32" class="rounded-circle ms-1">
+                            {% else %}
+                            <img src="" alt="mdo" width="32" height="32" class="rounded-circle ms-1">
+                            {% endif %}
+                                </div>
+
+
+
+                            </div>
+                            <!-- Submit button -->
+                            <div class="align-center align-items-center text-center">
+                                <button type="submit" class="btn btn-primary btn-block mt-4">Cập nhật</button>
+                            </div>
+                        </form>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
+
+</div>
+{% endblock %}

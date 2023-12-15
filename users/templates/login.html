@@ -1,0 +1,142 @@
+{% extends 'index.html' %}
+{% block title %}
+<title>Đăng nhập | Course2023</title>
+{% endblock %}
+
+{% block toast %}
+{% if result == "not" %}
+<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+        <img src="https://cdn-icons-png.flaticon.com/512/5234/5234326.png" width="10px" class="rounded me-2" alt="...">
+        <strong class="me-auto">Alert</strong>
+        <small class="text-muted">Now</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+        Username & Mật khẩu are not Matching!
+    </div>
+</div>
+{% endif %}
+{% if result == "register" %}
+<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+        <img src="https://cdn-icons-png.flaticon.com/512/5234/5234326.png" width="10px" class="rounded me-2" alt="...">
+        <strong class="me-auto">Alert</strong>
+        <small class="text-muted">Now</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+        Register complete! Please login to comtinue.
+    </div>
+</div>
+
+{% if result == "changepassword" %}
+<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+        <img src="https://cdn-icons-png.flaticon.com/512/5234/5234326.png" width="10px" class="rounded me-2" alt="...">
+        <strong class="me-auto">Alert</strong>
+        <small class="text-muted">Now</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+        Mật khẩu change complete! Please Đăng nhập!
+    </div>
+</div>
+{% endif %}
+
+
+{% endif %}
+{% if result == "notrole" %}
+<div class="toast show alert-warning" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+        <img src="https://cdn-icons-png.flaticon.com/512/5234/5234326.png" width="10px" class="rounded me-2" alt="...">
+        <strong class="me-auto">Alert</strong>
+        <small class="text-muted">Now</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+        User dosen't set role, please contact admin to set role!
+    </div>
+</div>
+{% endif %}
+
+{% if result == "register" %}
+<div class="toast show alert-success" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+        <img src="https://cdn-icons-png.flaticon.com/512/5234/5234326.png" width="10px" class="rounded me-2" alt="...">
+        <strong class="me-auto">Alert</strong>
+        <small class="text-muted">Now</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+        Register complte, Please contact to admin to join class.
+    </div>
+</div>
+{% endif %}
+
+{% if result == "notactive" %}
+<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+        <img src="https://cdn-icons-png.flaticon.com/512/5234/5234326.png" width="10px" class="rounded me-2" alt="...">
+        <strong class="me-auto">Alert</strong>
+        <small class="text-muted">Now</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+        Account not active, please wait admin check and active account!!!
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-8 col-md-6">
+            <div class="box w-100">
+                <div class="p-5 w-100">
+                    <h2 class="text-center">Đăng nhập</h2>
+                    <div class="infowrapper">
+                        <form method="post" action="">
+                            {% csrf_token %}
+                            <!-- Email input -->
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="form1Example1">Username</label>
+                                <input type="text" id="form1Example1" name="username" class="form-control" />
+                            </div>
+
+                            <!-- Mật khẩu input -->
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="form1Example2">Mật khẩu</label>
+                                <input type="password" id="form1Example2" name="password" class="form-control" />
+                            </div>
+
+                            <!-- 2 column grid layout for inline styling -->
+                            <div class="row mb-4">
+                                <div class="col d-flex justify-content-center">
+                                    <!-- Checkbox -->
+                                    <div class="form-check">
+                                        <label class="form-check-label" for="form1Example3"> Nhớ tôi </label>
+                                        <input class="form-check-input" type="checkbox" value="" id="form1Example3"
+                                            checked />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="align-center align-items-center text-center">
+                                <!-- Submit button -->
+                                <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
+                            </div>
+                        </form>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
+
+</div>
+{% endblock %}

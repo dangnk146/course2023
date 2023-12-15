@@ -1,0 +1,85 @@
+{% extends 'indexstudent.html' %}
+{% block title %}
+<title>Bảng điều khiển student | {{course.name}}</title>
+{% endblock %}
+
+
+{% block titleh1 %}
+Quản lý student | Lớp: {{class_membership.class_membership.name}} | Môn học: {{course.name}}
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+<li class="breadcrumb-item active"><a href="{% url 'manageStudent' %}">Bảng điều khiển</a></li>
+<li class="breadcrumb-item active">{{course.name}}</li>
+{% endblock %}
+
+{% block {{course.name}} %}
+active
+{% endblock %}
+
+{% block body %}
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-12">
+            <h4>Môn học: {{course.name}}</h4>
+            <p>Teacher: {{course.teacher.user.first_name}} {{course.teacher.user.last_name}}</p>
+            <p>Email teacher: {{course.teacher.user.email}}</p>
+        </div>
+
+        <div class="container-fluid">
+            {% for tag in tags %}
+            <div class="col-12 my-2">
+                <div class="card">
+                    <div class="card-header w-100">
+                        <h6 class="h3 bold text-success" style="font-weight: 700;">{{tag.name}}</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mt-3">
+                            {% for record in taglessioncourses %}
+                            {% if record.chuongTag == tag %}
+                            <a class="col-4 position-relative" href="{% url 'manageStudentCourseLessonView' course.id record.id %}">
+                                {% if record.images %}
+                                <div class="p-3 rounded card-course"
+                                    style="background-image: url('{{record.images}}');">
+                                    {% else %}
+                                    <div class="p-3 rounded card-course"                                        
+                                        style="background-image: url('{{course.image.url}}');">
+                                        {% endif %}
+                                        <h4 class=" bold">{{record.name}}</h4>
+                                </div>
+                            </a>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        <div class="col-12 my-3"></div>
+                        {% for record in taglessionexamcourses %}
+                        {% if record.chuongTag == tag %}
+
+                        <div class="col-6">
+                            {% if record.images %}
+                            <div class="p-3 rounded card-course-exam card-course shadow">
+                            {% else %}
+                            <div class="p-3 rounded card-course-exam card-course shadow">
+                            {% endif %}
+                            <a href="{% url 'manageStudentCourseLessonViewExam' course.id record.id %}">
+                                    <i class="text-danger">Bài kiểm tra ***</i>
+                                    <h4 class=" bold"> {{record.name}}</h4>
+                                    <div class="">
+                                        <a class="btn btn-outline-success"
+                                            href="{% url 'manageStudentCourseLessonViewExam' course.id record.id %}#submitExam">Submitcourse</a>
+                                        </div>
+                                    </a>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+</section>
+{% endblock %}

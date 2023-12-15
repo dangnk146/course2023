@@ -1,0 +1,77 @@
+{% extends 'indexTeacher.html' %}
+{% block title %}
+<title> Điểm kiểm tra {{lessionexam.name}} | {{course.name}} {{class_membership.name}} Bảng điều khiển giáo viên | Môn học</title>
+{% endblock %}
+
+
+{% block titleh1 %}
+Quản lý môn học ||| Lớp: {{class_membership.name}} ||| Môn học: {{course.name}} | Bài kiểm tra  {{lessionexam.name}} 
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+<li class="breadcrumb-item ">Bảng điều khiển giáo viên</li>
+<li class="breadcrumb-item"><a href="{% url 'manageTeacherClass' class_membership.id %}">{{class_membership.name}}</a>
+</li>
+<li class="breadcrumb-item active"><a href="{% url 'manageTeacherClassCourse' class_membership.id course.id %}">{{course.name}}</a></li>
+{% endblock %}
+
+{% block {{class_membership.name}} %}
+active
+{% endblock %}
+
+{% block body %}
+<section class="section dashboard">
+    <a class="bold text-secondary" href="{% url 'manageTeacherClassCourse' class_membership.id course.id %}"><i
+        class="bi bi-arrow-left-circle-fill"></i> Trở về {{course.name}}</a>
+    <div class="row">
+        <div class="col-12 mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Chấm điểm {{lessionexam.name}} môn {{course.name}}</h5>
+                    <div class="container">
+                        <div class="row">
+                            {% for submitLessionExam in submitLessionExams %}
+                            <div class="col-12 rounded border my-3">
+                                <h5><b>Tên student:</b> {{submitLessionExam.user.user.last_name}} {{submitLessionExam.user.user.first_name}}</h3>
+                                <p><b>Email: </b>{{submitLessionExam.user.user.email}}</p>
+                                <p><b>File Submit: </b><a href="{{submitLessionExam.file.url}}">{{submitLessionExam.file.url}}</a></p>
+                                <form method="post" action="" class="shadow container my-2 py-3">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="form-outline">
+                                                <label class="form-label" for="form1Example1">Scores</label>
+                                                <input type="text" name="result" value="{{submitLessionExam.result.result}}" id="form3Example1" class="form-control" />
+                                                
+                                            </div>
+                                        </div>            
+                                        <input class="d-none" type="text" name="id_submition" value="{{submitLessionExam.id}}" id="form3Example1" class="form-control" />
+                                        <input class="d-none" type="text" name="id_user" value="{{submitLessionExam.user.id}}" id="form3Example1" class="form-control" />
+                                        <div class="col-8">
+                                            <div class="form-outline">
+                                                <label class="form-label" for="form1Example1">Comment</label>
+                                                <input type="text" name="description"  value="{{submitLessionExam.result.description}}" id="form3Example1" class="form-control" />
+            
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <!-- Submit button -->
+                                            <button type="submit" class="btn btn-primary btn-block">+ Scores</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block script %}
+{% load static %}
+
+{% endblock %}

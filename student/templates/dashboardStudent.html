@@ -1,0 +1,56 @@
+{% extends 'indexstudent.html' %}
+{% block title %}
+<title>Bảng điều khiển student | Môn học</title>
+{% endblock %}
+
+
+{% block titleh1 %}
+Quản lý student | Lớp: {{class_membership.class_membership.name}}
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+<li class="breadcrumb-item active">Bảng điều khiển</li>
+{% endblock %}
+
+{% block dashboard %}
+active
+{% endblock %}
+
+{% block body %}
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-4 col-md-3">
+            <div class="card info-card start-card">
+                <div class="card-body">
+                    <h5 class="card-title">Lớp học</h5>
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bi bi-collection"></i>
+                        </div>
+                        <div class="ps-3">
+                            <h6>{{course_count}}</h6>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-12">
+            <h4>Môn học</h4>
+        </div>
+
+        {% for course in courses %}
+        <a class="col-4 rounded shadow card-course me-3 position-relative"  href="{% url 'manageStudentCourse' course.id %}"
+            style="background-image: url('{{course.image.url}}');">
+            <h4 class=" bold">{{course.name}}</h4>
+            <div class="">
+                <p>Teacher: {{course.teacher.user.first_name}} {{course.teacher.user.last_name}}</p>
+            </div>
+        </a>
+        {% endfor %}
+
+
+    </div>
+</section>
+{% endblock %}

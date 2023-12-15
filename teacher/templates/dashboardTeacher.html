@@ -1,0 +1,53 @@
+{% extends 'indexTeacher.html' %}
+{% block title %}
+<title>Bảng điều khiển giáo viên | Môn học</title>
+{% endblock %}
+
+
+{% block titleh1 %}
+Quản lý giáo viên
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+<li class="breadcrumb-item active">Bảng điều khiển</li>
+{% endblock %}
+
+{% block dashboard %}
+active
+{% endblock %}
+
+{% block body %}
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-4 col-md-3">
+            <div class="card info-card start-card">
+                <div class="card-body">
+                    <h5 class="card-title">Lớp học</h5>
+                    <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                            <i class="bi bi-collection"></i>
+                        </div>
+                        <div class="ps-3">
+                            <h6>{{count_class_membership}}</h6>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-12">
+            <h4>Lớp</h4>
+        </div>
+        {% for class_membership in class_memberships %}
+        <div class="col-4 col-md-3">
+            <div class="card info-card sales-card">
+                <a class="card-body" href="{% url 'manageTeacherClass' class_membership.id %}">
+                    <h5 class="card-title">{{class_membership.name}}</h5>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

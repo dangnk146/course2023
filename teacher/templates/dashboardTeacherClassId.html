@@ -1,0 +1,47 @@
+{% extends 'indexTeacher.html' %}
+{% block title %}
+<title> {{class_membership.name}} Bảng điều khiển giáo viên | Môn học</title>
+{% endblock %}
+
+
+{% block titleh1 %}
+Quản lý môn học ||| Lớp: {{class_membership.name}}
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+<li class="breadcrumb-item ">Bảng điều khiển giáo viên</li>
+<li class="breadcrumb-item active">{{class_membership.name}}</li>
+{% endblock %}
+
+{% block {{class_membership.name}} %}
+active
+{% endblock %}
+
+{% block body %}
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-12">
+            <a href="{% url 'manageTeacherClass' class_membership.id %}" class="btn btn-warning">Danh sách môn học</a>
+            <a href="{% url 'manageTeacherClassStudent' class_membership.id %}" class="btn btn-primary">Danh sách học sinh</a>
+        </div>
+        <div class="col-12 mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Danh sách môn học trong lớp {{class_membership.name}}</h5>
+                    <div class="container">
+                        <div class="row">
+                            {% for course in course_teacher %}
+                            <a class="col-4 rounded shadow card-course me-3" href="{% url 'manageTeacherClassCourse' class_membership.id course.id %}" style="background-image: url('{{course.image.url}}');">
+                                <h4 class=" bold">{{course.name}}</h4>
+                                <p>{{course.factory.name}}</p>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

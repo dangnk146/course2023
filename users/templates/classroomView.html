@@ -1,0 +1,87 @@
+{% extends 'indexstaff.html' %}
+{% block title %}
+<title>Lớp học | Admin page | Môn học</title>
+{% endblock %}
+
+
+{% block titleh1 %}
+Lớp học
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+<li class="breadcrumb-item active">Lớp học</li>
+{% endblock %}
+
+{% block classroom %}
+active
+{% endblock %}
+
+{% block body %}
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Thêm Tên lớp</h5>
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="form-outline">                                    
+                                    <input type="text" name="classroom" id="form3Example1" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <select class="form-control" id="factory" name="factory">
+                                    <option value="">Lựa chọn khối lớp</option>
+                                    {% for factory in factories %}
+                                    <option value="{{factory.id}}">{{factory.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-4">
+                                <!-- Submit button -->
+                                <button type="submit" class="btn btn-primary btn-block">+ Thêm</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Bảng danh sách <b>Lớp học</b></h5>                    
+                    <!-- Table with stripped rows -->
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Khối lớp</th>
+                                <th scope="col">Tên</th>
+                                <th scope="col">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for classroom in classrooms %}
+                            <tr>
+                                <th scope="row">{{forloop.counter}}</th>                                
+                                <td>{{classroom.factory.name}}</td>
+                                <td>{{classroom.name}}</td>
+                                <td>
+                                    <a href="{% url 'classroomEdit' classroom.id %}" class="btn btn-primary">Sửa</a>
+                                    <a href="{% url 'classroomDelete' classroom.id %}" class="btn btn-danger">Xóa</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

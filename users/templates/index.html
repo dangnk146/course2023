@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    {% block title %}
+    <!-- <title>Document</title> -->
+    {% endblock %}
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="{% static 'assets/img/logo.png' %}" rel="icon">
+    <link href="{% static 'assets/img/logo.png' %}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/quill/quill.snow.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/quill/quill.bubble.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/simple-datatables/style.css' %}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="container-fluid" style="min-height: 100px;">
+        <div class="row">
+            <div class="col-1">
+                <img src="{% static '/img/avatar.png' %}" class="w-100" alt="">
+            </div>
+            <div class="col-11 text-light bg-primary p-3">
+                <h2 class="text-center">Trường Trung học Phổ Thông ABC</h2>
+                <p class="text-center">Địa chỉ: 280 An Dương Vương, Phường 5, Tp. HCM</p>
+                <div class="justify-content-center d-flex">
+                    <p>SĐT: 09.87654321</p>
+                    <div class="mx-5"></div>
+                    <p>Fax: 09.87654321</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="border-line-header mt-2">
+        <div class="bg-primary" style="height: 4px;"></div>
+        <div class="bg-dark" style="height: 2px;"></div>
+    </div>
+    <!-- ======= Header ======= -->
+    <header id="header" class="header d-flex align-items-center">
+
+        <div class="d-flex align-items-center justify-content-between">
+            <a class="me-2 text-dark fw-bold" href="{% url 'home' %}">
+                <span class="navlink {% block Home %} {% endblock %}">Trang chủ</span>
+            </a>       
+            {% if categories %}
+            {% for category in categories %}
+                {% if category.is_notsubcategory %}
+                    <a class="px-2 mx-2 text-dark" href="{% url 'homeCategoryBlog' category.id %}">
+                        <span class="navlink {% block category.name %} {% endblock %}">{{ category.name }}</span>
+                    </a> 
+                {% else %}
+                    <a class="text-dark dropdown pe-2 me-2">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            {{ category.name }}
+                        </a>
+                        <ul class="dropdown-menu">
+                        {% for subcategory in subcategories %}
+                            {% if subcategory.category == category %}            
+                                <li><a class="dropdown-item" href="{% url 'homeSubCategory' category.id subcategory.id %}">{{subcategory.name}}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        </ul>
+                    </a>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+
+        </div><!-- End Logo -->
+
+        <div class="search-bar">
+            <div class="me-auto mb-2 mb-lg-0 text-dark">
+                         
+            </div>
+        </div><!-- End Search Bar -->
+
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">                
+                <li class="nav-item dropdown pe-3">
+                    <div class="btn-group shadow-0 text-white">
+
+                        {% if request.user.is_authenticated %}
+                        <div class="btn-group shadow-0">
+                            <a class="d-block link-dark text-decoration-none dropdown-toggle " data-bs-toggle="dropdown"
+                                aria-expanded="false" style="cursor: pointer">
+                                Chào,  {{request.user.first_name}}
+
+                                {% if data.image %}
+                            <img src="{{data.image.url}}" alt="mdo" width="32" height="32" class="rounded-circle ms-1">
+                            {% else %}
+                            <img src="" alt="mdo" width="32" height="32" class="rounded-circle ms-1">
+                            {% endif %}
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-start">
+                                {% if request.user.is_staff %}
+                                <li>
+                                    <a class="nav-item dropdown-item" href="{% url 'manageHomePage' %}">Quản lý
+                                        trang chủ</a>
+                                </li>
+                                <li>
+                                    <a class="nav-item dropdown-item" href="{% url 'manageUser' %}">Quản lý Tài khoản</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                {% endif %}
+                                {% if data.is_teacher %}
+                                <li>
+                                    <a class="nav-item dropdown-item" href="{% url 'manageTeacher' %}">Giáo viên</a>
+                                </li>
+                                {% endif %}
+                                {% if data.is_student %}
+                                <li>
+                                    <a class="nav-item dropdown-item" href="{% url 'manageStudent' %}">Học sinh</a>
+                                </li>
+                                {% endif %}
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="nav-item dropdown-item" href="{% url 'profileUser' %}">Thông tin cá nhân</a>
+                                </li>
+                                <li>
+                                    <a class="nav-item dropdown-item" href="{% url 'changePassword' %}">Thay đổi mật khẩu</a>
+                                </li>
+                                <li>
+                                    <a class="nav-item dropdown-item" href="{% url 'logout' %}">Đăng xuất</a>
+                                </li>
+                            </ul>
+                        </div>
+                        {% if not request.user.is_staff %}
+                        {% else %}
+
+                        {% endif %}
+                        {% else %}
+
+                <li class="nav-item">
+                    <a type="nav-link" class="btn btn-primary" href="{% url 'loginUser' %}">Đăng nhập</a>
+                </li>
+
+                {% endif %}
+                </div>
+
+                </li><!-- End Profile Nav -->
+
+            </ul>
+        </nav><!-- End Icons Navigation -->
+
+    </header><!-- End Header -->
+    <div class="mt-5"></div>
+    {% block body %}
+
+    {% endblock %}
+
+    {% block toast %}
+
+    {% endblock %}
+
+
+
+
+    <!-- ======= Footer ======= -->
+    <footer class="footer">
+        <div class="copyright">
+            &copy; Copyright <strong><span>Course2023</span></strong>. Đã đăng ký Bản quyền
+        </div>
+    </footer><!-- End Footer -->
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="{% static 'assets/vendor/apexcharts/apexcharts.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/quill/quill.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/simple-datatables/simple-datatables.js' %}"></script>
+    <script src="{% static 'assets/vendor/tinymce/tinymce.min.js' %}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+</body>
+
+</html>

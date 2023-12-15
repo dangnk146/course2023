@@ -1,0 +1,65 @@
+{% extends 'indexHomepage.html' %}
+{% block title %}
+<title>Subcategory | Category {{category.name}} Bảng điều khiển HOMEPAGE | Admin page | Môn học</title>
+{% endblock %}
+
+
+{% block titleh1 %}
+Quản lý
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+<li class="breadcrumb-item">Bảng điều khiển</li>
+<li class="breadcrumb-item"><a href="{% url 'manageHomePageCategory' %}">Danh mục</a></li>
+<li class="breadcrumb-item"><a href="{% url 'manageHomePageSubcategory' category.id   %}">{{category.name}}</a></li>
+<li class="breadcrumb-item active">{{subcategory.name}}</li>
+{% endblock %}
+
+{% block Category %}
+active
+{% endblock %}
+
+{% block body %}
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-12">
+            <a href="{% url 'manageHomePagBlogsAdd' category.id subcategory.id  %}" class="btn btn-primary">Thêm blog</a>            
+        </div>
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Bảng danh sách <b>bài viết</b></h5>
+                    <!-- Table with stripped rows -->
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Tên</th>
+                                <th scope="col">images</th>
+                                <th scope="col">created_at</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for blog in blogs %}
+                            <tr>
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td>{{blog.name}}</td>
+                                <td>{{blog.images}}</td>
+                                <td>{{blog.created_at}}</td>
+                                <td>
+                                    <a href="{% url 'manageHomePagBlogsEdit' category.id subcategory.id blog.id  %}" class="btn btn-primary">Sửa</a>
+                                    <a href="{% url 'manageHomePagBlogsDelete' category.id subcategory.id blog.id  %}" class="btn btn-danger">Xóa</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'indexstaff.html' %}
+{% block title %}
+<title>Khối lớp |Quản lý môn học | Admin page | Môn học</title>
+{% endblock %}
+
+
+{% block titleh1 %}
+Khối lớp
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+<li class="breadcrumb-item active">Khối lớp</li>
+{% endblock %}
+
+{% block manageCourseFactory %}
+active
+{% endblock %}
+
+{% block body %}
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Thêm Tên KHỐI LỚP</h5>
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="form-outline">                                    
+                                    <input type="text" name="factory" value="{{factory}}" id="form3Example1" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <!-- Submit button -->
+                                <button type="submit" class="btn btn-primary btn-block">+ Chỉnh sửa</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+</section>
+{% endblock %}

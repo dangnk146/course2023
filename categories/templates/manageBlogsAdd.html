@@ -1,0 +1,114 @@
+{% extends 'indexHomepage.html' %}
+{% block title %}
+<title> Blogs | Subcategory | Category {{category.name}} Bảng điều khiển HOMEPAGE | Admin page | Môn học</title>
+{% endblock %}
+
+
+{% block titleh1 %}
+Quản lý
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+<li class="breadcrumb-item">Bảng điều khiển</li>
+<li class="breadcrumb-item"><a href="{% url 'manageHomePageCategory' %}">Danh mục</a></li>
+<li class="breadcrumb-item"><a href="{% url 'manageHomePageSubcategory' category.id   %}">{{category.name}}</a></li>
+<li class="breadcrumb-item"><a href="{% url 'manageHomePagBlogs' category.id subcategory.id  %}">{{subcategory.name}}</a></li>
+<li class="breadcrumb-item active">Thêm blog</li>
+{% endblock %}
+
+{% block Category %}
+active
+{% endblock %}
+
+{% block body %}
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-12 mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Thêm blog for <span class="fw-bold text-warning">{{subcategory.name}}</span> in <span class="fw-bold text-warning">{{category.name}}</span></h5>
+                    <div class="container">
+                        <form method="post" action="">
+                            {% csrf_token %}
+                            <div class="row my-2">
+                                <div class="col-8">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form3Example1">Tên blog</label>
+                                        <input type="text" name="name" id="form3Example1" class="form-control" />
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="row my-2">
+                                <div class="col-12 my-2">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form3Example1">Đường link ảnh <i
+                                                class="alert-warning">(không bắc buộc)</i></label>
+                                        <input type="text" name="image" id="form3Example1" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-12 my-2">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form3Example1">Đường link video <i
+                                                class="alert-warning">(không bắc buộc)</i></label>
+                                        <input type="text" name="linkvideo" id="form3Example1" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-12 my-2">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form3Example1">Đường link chuyển hướng <i
+                                                class="alert-warning">(không bắc buộc)</i></label>
+                                        <input type="text" name="linkredirect" id="form3Example1"
+                                            class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div class="form-outline">
+                                    <label for="floatingTextarea2">Nội dung bài giảng<i class="alert-warning">(Không bắc buộc)</i></label>
+                                    <textarea class="form-control" placeholder="Leave a content here" id="content"
+                                        name="content" style="height: 100px"></textarea>
+                                </div>
+                            </div>
+                            <!-- Submit button -->
+                            <div class="align-center align-items-center text-center">
+                                <button type="submit" class="btn btn-primary btn-block mt-4">Thêm blog</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</section>
+{% endblock %}
+{% block script %}
+{% load static %}
+<script src="https://cdn.tiny.cloud/1/d8za75g2087d61ncwe0m05rc8whd9djpcsgh12v0x9d43oub/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+<script>
+    tinymce.init({
+        selector: 'textarea#content',
+        plugins: 'lists, link, image, media',
+        toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | link image media | removeformat help',
+        menubar: false,
+        setup: (content) => {
+            // Apply the focus effect
+            content.on("init", () => {
+                content.getContainer().style.transition = "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out";
+            });
+            content.on("focus", () => {
+                (content.getContainer().style.boxShadow = "0 0 0 .2rem rgba(0, 123, 255, .25)"),
+                (content.getContainer().style.borderColor = "#80bdff");
+            });
+            content.on("blur", () => {
+                (content.getContainer().style.boxShadow = ""),
+                    (content.getContainer().style.borderColor = "");
+            });
+        },
+    });
+</script>
+{% endblock %}

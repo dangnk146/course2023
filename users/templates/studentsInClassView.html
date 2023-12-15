@@ -1,0 +1,305 @@
+{% extends 'indexstaff.html' %}
+{% block title %}
+<title>Danh sách học sinh trong lớp học | Admin page | Môn học</title>
+{% endblock %}
+
+
+{% block titleh1 %}
+Danh sách học sinh trong lớp học
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+<li class="breadcrumb-item active">Danh sách học sinh trong lớp học</li>
+{% endblock %}
+
+{% block studentsInClass %}
+active
+{% endblock %}
+
+{% block body %}
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-lg-12">
+            <form method="GET" action="">
+            <!-- Add this code to your template -->
+            <div class="form-group">
+                <label for="factory">Lựa chọn một Khối lớp:</label>
+                <select class="form-control" id="factory" name="factory">
+                    <option value="">Lựa chọn một Khối lớp</option>
+                    {% for factory in factories %}
+                    {% if factory_select == factory %}
+                    <option value="{{ factory.id }}" selected>{{ factory.name }}</option>
+                    {% else %}
+                    <option value="{{ factory.id }}">{{ factory.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="classroom">Lựa chọn một Lớp:</label>
+                <select class="form-control" id="classroom" name="classroom">
+                    <option value="">Lựa chọn một Lớp</option>
+                    {% for item in classrooms %}
+                    {% if item == classroom %}
+                    <option value="{{ item.id }}" selected>{{ item.name }}</option>
+                    {% else %}
+                    <option value="{{ item.id }}">{{ item.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Lựa chọn Lớp</button>
+        </form>
+        </div>
+        <div class="col-lg-12">
+            <!-- mẫu danh sách học sinh và giáo viên -->
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Bảng danh sách <b>GIÁO VIÊN</b> </h5>
+                    <!-- <button class="float-end btn btn-outline-warning position-absolute end-0 top-0"
+                        data-bs-toggle="modal" data-bs-target="#addTeacherModal">Thêm giáo viên</button> -->
+                    <!-- Table with stripped rows -->
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Ảnh đại diện</th>
+                                <th scope="col">Họ và tên</th>
+                                <th scope="col">Ngày tháng năm sinh</th>
+                                <th scope="col">Địa chỉ</th>
+                                <th scope="col">Liên hệ</th>
+                                <!-- <th scope="col">Hành động</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in teachers %}
+                            <tr>
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td><img src="{{user.image.url}}" alt="mdo" width="32" height="32"
+                                        class="rounded-circle"></td>
+                                <td>{{user.user.first_name}} {{user.user.last_name}}</td>
+                                <td>{{user.dob}}</td>
+                                <td>{{user.address}}</td>
+                                <td>{{user.contact}}</td>
+                                <!-- <td>
+                                    {% for teacher_membership in teacher_memberships %}
+                                    {% if teacher_membership.teacher == user %}
+                                    <a href="{% url 'teachersInClassRemove' teacher_membership.id %}"
+                                        class="btn btn-danger">Remove</a>
+                                    {% endif %}
+                                    {% endfor %}
+                                </td> -->
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Bảng danh sách <b>NHỮNG HỌC SINH</b> </h5>
+                    <button class="btn btn-outline-warning position-absolute end-0 top-0" data-bs-toggle="modal"
+                        data-bs-target="#addStudentModal">Thêm Học sinh</button>
+
+
+                    <!-- Table with stripped rows -->
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Ảnh đại diện</th>
+                                <th scope="col">Họ và tên</th>
+                                <th scope="col">Ngày tháng năm sinh</th>
+                                <th scope="col">Địa chỉ</th>
+                                <th scope="col">Liên hệ</th>
+                                <th scope="col">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in students %}
+                            <tr>
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td>
+                                    {% if user.image %}
+                                    <img src="{{user.image.url}}" alt="mdo" width="32" height="32"
+                                        class="rounded-circle">
+                                        {% else %}
+                                        <img src="" alt="mdo" width="32" height="32"
+                                        class="rounded-circle">
+                                        {% endif %}
+                                </td>
+                                <td>{{user.user.first_name}} {{user.user.last_name}}</td>
+                                <td>{{user.dob}}</td>
+                                <td>{{user.address}}</td>
+                                <td>{{user.contact}}</td>
+                                <td>
+                                    {% for student_membership in student_memberships %}
+                                    {% if student_membership.student == user %}
+                                    <a href="{% url 'studentsInClassRemove' student_membership.id %}"
+                                        class="btn btn-danger">Xóa</a>
+                                    {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Teacher Modal -->
+    <div class="modal fade" id="addTeacherModal" tabindex="-1" aria-labelledby="addTeacherModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addTeacherModalLabel">Thêm giáo viên</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addTeacherForm">
+                        <!-- Add teacher form fields go here -->
+                        <!-- Example: -->
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="teacherEmailInput" class="form-label">Teacher Email</label>
+                            <input type="email" class="form-control" id="teacherEmailInput" name="teacherEmailInput">
+                        </div>
+                        <div class="alert alert-danger" id="addTeacherError" style="display: none;"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="addTeacherButton">Thêm giáo viên</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Học sinh Modal -->
+    <div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addStudentModalLabel">Thêm Học sinh</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Add Học sinh Modal -->
+                <div class="modal-body">
+                    <form id="addStudentForm">
+                        <!-- Add student form fields go here -->
+                        <!-- Example: -->
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="studentEmailInput" class="form-label">Học sinh Email</label>
+                            <input type="email" class="form-control" id="studentEmailInput" name="studentEmailInput">
+                        </div>
+                        <div class="alert alert-danger" id="addStudentError" style="display: none;"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="addStudentButton">Thêm Học sinh</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $('#factory').on('change', function () {
+                // Lấy giá trị của factory được chọn
+                var factory_id = $(this).val();
+
+                // Fetch ClassMemberships based on the selected Khối lớp
+                $.ajax({
+                    url: '/get_classmemberships/',  // Create a Django view to fetch ClassMemberships
+                    method: 'GET',
+                    data: {
+                        factory_id: factory_id,
+                    },
+                    success: function (response) {
+                        // Cập nhật the ClassMembership dropdown options
+                        var classroomDropdown = $('#classroom');
+                        classroomDropdown.empty().append('<option value="">Lựa chọn một Lớp</option>');
+                        $.each(response.classmemberships, function (key, value) {
+                            classroomDropdown.append($('<option></option>').attr('value', value.id).text(value.name));
+                        });
+                    }
+                });
+            });
+
+            $('#classroom').on('change', function () {
+                // Lấy giá trị của lớp được chọn
+                var classroom_id = $(this).val();
+                var email = $('#teacherEmailInput').val();
+
+                if (email) {
+                    searchUserAndAddToClass('teacher', email, classroom_id);
+                }
+            });
+
+            $('#addTeacherButton').click(function () {
+                var email = $('#teacherEmailInput').val();
+                if (email) {
+                    searchUserAndAddToClass('teacher', email);
+                }
+            });
+
+            $('#addStudentButton').click(function () {
+                var email = $('#studentEmailInput').val();
+                if (email) {
+                    searchUserAndAddToClass('student', email);
+                }
+            });
+
+            function searchUserAndAddToClass(userType, email) {
+                var csrfToken = $("input[name='csrfmiddlewaretoken']").val(); // Lấy token CSRF từ trang
+                var classroom_id = $('#classroom').val();
+                $.ajax({
+                    url: '/get_user_id/',
+                    method: 'POST',
+                    data: {
+                        user_type: userType,
+                        email: email,
+                        classroom_id: classroom_id,
+                        csrfmiddlewaretoken: csrfToken // Thêm token CSRF vào yêu cầu
+                    },
+                    success: function (response) {
+                        var userId = response.user_id;
+                        var erro = response.erro;
+                        if (userId) {
+                            // Thực hiện thêm người dùng vào lớp bằng ID tại đây
+                            console.log('User ID: ' + userId);
+                            // Tắt modal
+                            $('#addTeacherModal').modal('hide');
+                            // Tải lại trang
+                            location.reload();
+                        } else {
+                            // Hiển thị thông báo lỗi
+                            var errorElement = $('#addTeacherError');
+                            var errorElement2 = $('#addStudentError');
+                            errorElement.text("Error: " + erro);
+                            errorElement.show();
+
+                            errorElement2.text("Error: " + erro);
+                            errorElement2.show();
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+
+</section>
+{% endblock %}

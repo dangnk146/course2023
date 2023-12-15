@@ -1,0 +1,100 @@
+{% extends 'indexTeacher.html' %}
+{% block title %}
+<title> Add lession exam | {{course.name}} {{class_membership.name}} Bảng điều khiển giáo viên | Môn học</title>
+{% endblock %}
+
+
+{% block titleh1 %}
+Quản lý môn học ||| Lớp: {{class_membership.name}} ||| Môn học: {{course.name}} | Add lession exam
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+<li class="breadcrumb-item ">Bảng điều khiển giáo viên</li>
+<li class="breadcrumb-item"><a href="{% url 'manageTeacherClass' class_membership.id %}">{{class_membership.name}}</a>
+</li>
+<li class="breadcrumb-item active"><a href="{% url 'manageTeacherClassCourse' class_membership.id course.id %}">{{course.name}}</a></li>
+{% endblock %}
+
+{% block {{class_membership.name}} %}
+active
+{% endblock %}
+
+{% block body %}
+<section class="section dashboard">
+    <a class="bold text-secondary" href="{% url 'manageTeacherClassCourse' class_membership.id course.id %}"><i
+        class="bi bi-arrow-left-circle-fill"></i> Trở về {{course.name}}</a>
+    <div class="row">       
+        <div class="col-12 mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Thêm bài dạy exam in {{course.name}}</h5>
+                    <div class="container">
+                        <form method="post" action="">
+                            {% csrf_token %}
+                            <div class="row my-2">
+                                <div class="col-8">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form3Example1">Tên bài kiểm tra</label>
+                                        <input type="text" name="name" id="form3Example1" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 my-2">
+                                <div class="form-outline">
+                                    <label class="form-label" for="form3Example1">Thời gian bắt đầu bài kiểm tra</label>
+                                    <input type="datetime-local" name="timestart" id="form3Example1" class="form-control" />
+                                </div>
+                                <div class="form-outline">
+                                    <label class="form-label" for="form3Example1">Thời gian kết thúc bài kiểm tra</label>
+                                    <input type="datetime-local" name="timeend" id="form3Example1" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div class="form-outline">
+                                    <label for="floatingTextarea2">Nội dung bài giảng<i class="alert-warning">(Không bắc buộc)</i></label>
+                                    <textarea class="form-control" placeholder="Leave a content here" id="content"
+                                        name="content" style="height: 100px"></textarea>
+                                </div>
+                            </div>
+                            
+                            <!-- Submit button -->
+                            <div class="align-center align-items-center text-center">
+                                <button type="submit" class="btn btn-warning btn-block mt-4">Thêm bài kiểm tra</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block script %}
+{% load static %}
+<script src="https://cdn.tiny.cloud/1/d8za75g2087d61ncwe0m05rc8whd9djpcsgh12v0x9d43oub/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+<script>
+    tinymce.init({
+        selector: 'textarea#content',
+        plugins: 'lists, link, image, media',
+        toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | link image media | removeformat help',
+        menubar: false,
+        setup: (content) => {
+            // Apply the focus effect
+            content.on("init", () => {
+                content.getContainer().style.transition = "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out";
+            });
+            content.on("focus", () => {
+                (content.getContainer().style.boxShadow = "0 0 0 .2rem rgba(0, 123, 255, .25)"),
+                (content.getContainer().style.borderColor = "#80bdff");
+            });
+            content.on("blur", () => {
+                (content.getContainer().style.boxShadow = ""),
+                    (content.getContainer().style.borderColor = "");
+            });
+        },
+    });
+</script>
+{% endblock %}

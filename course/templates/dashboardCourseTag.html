@@ -1,0 +1,88 @@
+{% extends 'indexstaff.html' %}
+{% block title %}
+<title>Bảng điều khiển tag | Admin page | Môn học</title>
+{% endblock %}
+
+
+{% block titleh1 %}
+Quản lý NHÃN
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+<li class="breadcrumb-item ">Bảng điều khiển</li>
+<li class="breadcrumb-item active">Nhãn</li>
+{% endblock %}
+
+{% block tag %}
+active
+{% endblock %}
+
+{% block body %}
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Thêm Tên NHÃN</h5>
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="form-outline">
+                                    <label class="form-label" for="form1Example1">Tên nhãn</label>
+                                    <input type="text" name="tag" id="form3Example1" class="form-control" />
+
+                                </div>
+                            </div>
+
+                            <div class="col-8">
+                                <div class="form-outline">
+                                    <label class="form-label" for="form1Example1">Mô tả nhãn</label>
+                                    <input type="text" name="description" id="form3Example1" class="form-control" />
+
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <!-- Submit button -->
+                                <button type="submit" class="btn btn-primary btn-block">+ Thêm</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Bảng danh sách <b>NHÃN</b></h5>
+                    <!-- Table with stripped rows -->
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Tên</th>
+                                <th scope="col">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tag in tags %}
+                            <tr>
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td>{{tag.name}}</td>
+                                <td>
+                                    <a href="{% url 'manageTagEdit' tag.id %}" class="btn btn-primary">Sửa</a>
+                                    <a href="{% url 'manageTagDelete' tag.id %}" class="btn btn-danger">Xóa</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

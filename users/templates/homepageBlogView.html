@@ -1,0 +1,66 @@
+{% extends 'index.html' %}
+{% block title %}
+<title> {{blog.name}} | {{subcategory.name}} {{category.name}} | Homepage | Course2023</title>
+{% endblock %}
+
+<!-- Have active -->
+{% block category.name %}active{% endblock %}
+{% block Home %}selectedlink{% endblock %}
+
+
+{% block body %}
+<div class="container-fluid mt-5 " style="height: 75vh;">   
+    <div class="row">
+        <div class="col-12 col-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Tin tức mới</h2>
+                </div>
+                <div class="card-body">
+                    {% for new in news %}
+                    {% if new.subcategory.category.id and new.subcategory.id and new.id %}
+                    <div class="nav-item py-2 my-2">
+                        <a href="{% url 'homeSubCategoryBlog' new.subcategory.category.id new.subcategory.id new.id %}">{{new.name}}</a>
+                    </div>
+                    {% endif %}
+                    {% endfor %}    
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-10">
+            <div class="card">
+                <div class="card-header">
+                    <h2> {{blog.name}}</h2>
+                    <p><i>Created_at: {{blog.created_at}}</i></p>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title text-center">Blog: <b> {{blog.name}}</b></h5>
+                    {% if blog.linkvideo %}
+                    <p>Link video: <a href="{{blog.linkvideo}} ">{{blog.linkvideo}} </a></p>
+                    {% endif %}
+                    {% if blog.linkredirect %}
+                    <p>Link redirect: <a href="{{blog.linkredirect}} ">{{blog.linkredirect}} </a></p>
+                    {% endif %}
+                    {% autoescape off %}
+                    {{ blog.content | safe }}
+                    {% endautoescape %}
+                </div>
+            </div>
+            <div class="card mt-3">
+                <div class="card-header">
+                    {% if subcategory.name == "none" %}
+                    <h5> More {{category.name}}</h5>
+                    {% else %}
+                    <h5> More {{subcategory.name}}</h5>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    {% for item in blogs %}
+                    <div class="nav-item py-2 my-2"><a href="{% url 'homeSubCategoryBlog' category.id subcategory.id item.id %}">{{item.name}}</a></div>
+                    {% endfor %}    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

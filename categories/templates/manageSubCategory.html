@@ -1,0 +1,71 @@
+{% extends 'indexHomepage.html' %}
+{% block title %}
+<title>Subcategory | Category {{category.name}} Bảng điều khiển HOMEPAGE | Admin page | Môn học</title>
+{% endblock %}
+
+
+{% block titleh1 %}
+Quản lý
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+<li class="breadcrumb-item">Bảng điều khiển</li>
+<li class="breadcrumb-item"><a href="{% url 'manageHomePageCategory' %}">Danh mục</a></li>
+<li class="breadcrumb-item active"><a href="{% url 'manageHomePageSubcategory' category.id   %}">{{category.name}}</a></li>
+{% endblock %}
+
+{% block Category %}
+active
+{% endblock %}
+
+{% block body %}
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="card-title">Danh mục: {{category.name}}</h3>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Thêm Tên danh mục con</h5>
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="form-outline">
+                                    <input type="text" name="name_subcategory" id="form3Example1" class="form-control" />
+                                </div>
+                            </div>
+                            
+                            <div class="col-4">
+                                <!-- Submit button -->
+                                <button type="submit" class="btn btn-primary btn-block">+ Thêm</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <h5>Thông tin danh mục con của {{category.name}}</h5>
+            <!-- mẫu danh sách học sinh và giáo viên -->
+            <div class="row">
+                {% for subcategory in subcategories %}
+                <div class="col-4 col-md-3">
+                    <div class="card info-card sales-card">
+                        <a class="card-body" href="{% url 'manageHomePagBlogs' category.id subcategory.id  %}">
+                            <h5 class="card-title">{{subcategory.name}}</h5>
+                        </a>
+                        <div class="container-fluid">
+                            <a class="btn btn-success " href="{% url 'manageHomePagBlogs' category.id subcategory.id  %}">Xem</a>
+                            <a class="btn btn-outline-warning" href="{% url 'manageHomePageSubcategoryEdit' category.id subcategory.id  %}">Sửa</a >
+                            <a class="btn btn-outline-danger" href="{% url 'manageHomePageSubcategoryDelete' category.id subcategory.id   %}">Xóa</a>
+
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

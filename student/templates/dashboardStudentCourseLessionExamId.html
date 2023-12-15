@@ -1,0 +1,80 @@
+{% extends 'indexstudent.html' %}
+{% block title %}
+<title>{{lessionExam.name}} | {{course.name}} Bảng điều khiển student</title>
+{% endblock %}
+
+
+{% block titleh1 %}
+Quản lý student | Lớp: {{class_membership.class_membership.name}} | Môn học: {{course.name}} | Bài kiểm tra:
+{{lessionExam.name}}
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+<li class="breadcrumb-item active"><a href="{% url 'manageStudent' %}">Bảng điều khiển</a></li>
+<li class="breadcrumb-item active"><a href="{% url 'manageStudentCourse' course.id %}">{{course.name}}</a></li>
+<li class="breadcrumb-item active">{{lessionExam.name}}</li>
+{% endblock %}
+
+{% block {{course.name}} %}
+active
+{% endblock %}
+
+{% block body %}
+<section class="section dashboard">
+    <a class="bold text-secondary" href="{% url 'manageStudentCourse' course.id %}"><i
+            class="bi bi-arrow-left-circle-fill"></i> Trở về {{course.name}}</a>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-6">
+            <div class="rounded shadow my-2 rounded-2 shadow-lg overflow-hidden">
+                <img src="{{lessionExam.images}}" class="w-100" alt="">
+            </div>
+        </div>
+        <div class="col"></div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body ">
+                    <h5 class="card-title text-center">Bài kiểm tra: <b> {{lessionExam.name}}</b></h5>
+                    
+                    {% autoescape off %}
+                    {{ lessionExam.content | safe }}
+                    {% endautoescape %}
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="card" id="submitExam">
+                <div class="card-body ">
+                    <h5 class="card-title text-center">Nộp bài <b> {{lessionExam.name}}</b></h5>
+                    {% if not submitLessionExam %}                    
+                        {% if isShow %}
+                        <form method="post" action="" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group col-md-6">
+                                <label for="formFile" class="form-label">File submit</label>
+                                <input class="form-control" name="file" type="file" id="formFile">
+                                <!-- Submit button -->
+                                <div class="align-center align-items-center text-center">
+                                    <button type="submit" class="btn btn-primary btn-block mt-4">Submit</button>
+                                </div>
+                        </form>
+                        {% endif %}
+                    {% else %}
+                        {% if submitLessionExam.result %}
+                        <p><span class="text-success h5">Score: </span><span class="fw-bolder">{{submitLessionExam.result.result}}</span></p>
+                        <p><span class="h5">Description: </span><span class="fw-bolder">{{submitLessionExam.result.description}}</span></p>
+                        {% else %}                   
+                        <div class="alert alert-warning" role="alert">you submited</div>
+                        {% if isShow %}
+                        <a class="btn btn-danger" href="{% url 'manageStudentCourseLessionExamDeleteSubmit' course.id lessionExam.id submitLessionExam.id %}">Xóa submited</a>
+                        {% endif %}
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,126 @@
+{% extends 'index.html' %}
+{% block title %}
+<title>REGISTER | Course2023</title>
+{% endblock %}
+
+{% block body %}
+
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-8 col-md-6">
+            <div class="w-100 box shadow">
+                <div class="displays p-5 w-100">
+                    <h2 class="text-center">REGISTER</h2>
+                    <div class="infowrapper">
+                        <form method="post" action="" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row my-2">
+                                <div class="col-6">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form3Example1">First Name</label>
+                                        <input type="text" name="firstname" id="form3Example1" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form3Example1">Last Name</label>
+                                        <input type="text" name="lastname" id="form3Example1" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row my-2">
+                                <div class="col-8 my-2">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form3Example1">Email Address</label>
+                                        <input type="email" name="email" id="form3Example1" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-8">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form3Example1">Username</label>
+                                        <input type="text" name="username" id="form3Example1" class="form-control" />
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row my-2">
+                                <div class="col-6">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form3Example1">Enter Mật khẩu</label>
+                                        <input type="password" name="password" id="form3Example1"
+                                            class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form3Example1">Re Enter Mật khẩu</label>
+                                        <input type="password" id="form3Example1" class="form-control" />
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="row my-2">
+
+                                <div class="col-12 my-2">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form3Example1">Liên hệ</label>
+                                        <input type="text" name="contact" id="form3Example1" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="col-12 my-2">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form3Example1">Địa chỉ</label>
+                                        <input type="text" name="address" id="form3Example1" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-12 my-2">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form3Example1">Enter Date of Birth</label>
+                                        <input type="date" name="dob" id="form3Example1" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="formFile" class="form-label">Ảnh đại diện</label>
+                                    <input class="form-control" name="image" type="file" id="formFile">
+                                </div>
+
+                                <div class="form-group col-md-12">
+                                    <label for="inputEmail4">Register As</label><br>
+                                    <div style="border:1px solid lightgrey;padding:5px;border-radius:6px">
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <label class="custom-control-label" for="customRadioInline1">giáo viên</label>
+                                            <input type="radio" id="customRadioInline1" name="reg"
+                                                class="custom-control-input" value="teacher">
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <label class="custom-control-label" for="customRadioInline2">Học sinh</label>
+                                            <input type="radio" id="customRadioInline2" name="reg"
+                                                class="custom-control-input" value="student" checked>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Submit button -->
+                            <div class="align-center align-items-center text-center">
+                                <button type="submit" class="btn btn-primary btn-block mt-4">Đăng nhập</button>
+                            </div>
+                        </form>
+                        <!-- Register buttons -->
+                        <div class="text-center mt-5">
+                            <p>Is a member? <a href="/login">Đăng nhập</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
+
+</div>
+{% endblock %}

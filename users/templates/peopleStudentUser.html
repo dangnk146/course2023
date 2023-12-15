@@ -1,0 +1,75 @@
+{% extends 'indexstaff.html' %}
+{% block title %}
+<title>Tài khoản Học sinh | Admin page | Môn học</title>
+{% endblock %}
+
+
+{% block titleh1 %}
+Thông tin học sinh
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+<li class="breadcrumb-item"><a href="{% url 'peopleStudent' %}">Tài khoản</a></li>
+<li class="breadcrumb-item active">Tài khoản học sinh</li>
+{% endblock %}
+
+{% block peopleStudent %}
+active
+{% endblock %}
+
+{% block body %}
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Bảng danh sách <b>NHỮNG HỌC SINH</b></h5>
+
+                    <!-- Table with stripped rows -->
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Ảnh đại diện</th>
+                                <th scope="col">Họ và tên</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Ngày tháng năm sinh</th>
+                                <th scope="col">Địa chỉ</th>
+                                <th scope="col">Liên hệ</th>
+                                <th scope="col">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in get_active_students %}
+                            <tr>
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td>
+                                    {% if user.image %}
+                                    <img src="{{user.image.url}}" alt="mdo" width="32" height="32"
+                                        class="rounded-circle">
+                                        {% else %}
+                                        <img src="" alt="mdo" width="32" height="32"
+                                        class="rounded-circle">
+                                        {% endif %}
+                                </td>
+                                <td>{{user.user.first_name}} {{user.user.last_name}}</td>
+                                <td>{{user.user.email}}</td>
+                                <td>{{user.dob}}</td>
+                                <td>{{user.address}}</td>
+                                <td>{{user.contact}}</td>
+                                <td><a href="{% url 'peopleStudentEdit' %}" class="btn btn-primary">Sửa</a>                                   
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

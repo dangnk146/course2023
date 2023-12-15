@@ -1,0 +1,125 @@
+{% extends 'indexTeacher.html' %}
+{% block title %}
+<title> Sửa bài học {{lession.name}} | {{course.name}} {{class_membership.name}} Bảng điều khiển giáo viên | Môn học</title>
+{% endblock %}
+
+
+{% block titleh1 %}
+Quản lý môn học ||| Lớp: {{class_membership.name}} ||| Môn học: {{course.name}} | Sửa bài học {{lession.name}} 
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+<li class="breadcrumb-item ">Bảng điều khiển giáo viên</li>
+<li class="breadcrumb-item"><a href="{% url 'manageTeacherClass' class_membership.id %}">{{class_membership.name}}</a>
+</li>
+<li class="breadcrumb-item active"><a href="{% url 'manageTeacherClassCourse' class_membership.id course.id %}">{{course.name}}</a></li>
+{% endblock %}
+
+{% block {{class_membership.name}} %}
+active
+{% endblock %}
+
+{% block body %}
+<section class="section dashboard">
+    <a class="bold text-secondary" href="{% url 'manageTeacherClassCourse' class_membership.id course.id %}"><i
+        class="bi bi-arrow-left-circle-fill"></i> Trở về {{course.name}}</a>
+    <div class="row">
+        <div class="col-12 mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Sửa bài học {{lession.name}} - Thuộc Chương {{lession.chuongTag.name}}/{{course.name}}</h5>
+                    <div class="container">
+                        <form method="post" action="" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row my-2">
+                                <div class="col-8">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="form3Example1">Tên bài giảng</label>
+                                        <input type="text" name="name" value="{{lession.name}}" id="form3Example1" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row my-2">
+                                <div class="col-12 my-2">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="formFile" for="form3Example1">Ảnh đại diện bài
+                                            học <i class="alert-warning">(không bắc buộc)</i></label>
+                                            <a href="{{lession.image.url}}">{{lession.image.url}}</a>
+                                        <input class="form-control" name="image"   type="file"
+                                            id="formFile">
+                                    </div>
+                                </div>
+                                <div class="col-12 my-2">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="formFile" for="form3Example1">Bài giảng tương tác
+                                            học <i class="alert-warning">(không bắc buộc)</i></label>
+                                            <a href="{{lession.baigiangtuongtac.url}}">{{lession.baigiangtuongtac.url}}</a>
+
+                                        <input class="form-control" name="baigiangtuongtac" value="{{lession.baigiangtuongtac}}" type="file"  id="formFile">
+                                    </div>
+                                </div>
+                                <div class="col-12 my-2">
+                                    <div class="form-outline">
+                                        <label class="form-label" for="formFile" for="form3Example1">Bai giang điện tử(Slides, pptx)<i class="alert-warning">(không bắc buộc)</i></label>
+                                        <a href="{{lession.pptx.url}}">{{lession.pptx.url}}</a>
+
+                                        <input class="form-control" name="pptx" value="{{lession.pptx}}" type="file"
+                                            id="formFile">
+                                    </div>
+                                    <div class="form-outline">
+                                        <label class="form-label" for="formFile" for="form3Example1">Bai giang điện tử(FILE PDF ĐỂ XEM ĐƯỢC)<i class="alert-warning">(không bắc buộc)</i></label>
+                                        <a href="{{lession.pdf.url}}">{{lession.pdf.url}}</a>
+
+                                        <input class="form-control" name="pdf" value="{{lession.pdf}}" type="file"
+                                            id="formFile">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div class="form-outline">
+                                    <label for="floatingTextarea2">Nội dung bài giảng<i class="alert-warning">(Không bắc buộc)</i></label>
+                                    <textarea class="form-control" placeholder="Leave a content here" id="content"
+                                        name="content" style="height: 100px">{{lession.content}}</textarea>
+                                </div>
+                            </div>
+                            <!-- Submit button -->
+                            <div class="align-center align-items-center text-center">
+                                <button type="submit" class="btn btn-primary btn-block mt-4">Cập nhật lession</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block script %}
+{% load static %}
+<script src="https://cdn.tiny.cloud/1/d8za75g2087d61ncwe0m05rc8whd9djpcsgh12v0x9d43oub/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+<script>
+    tinymce.init({
+        selector: 'textarea#content',
+        plugins: 'lists, link, image, media',
+        toolbar: 'h1 h2 bold italic strikethrough blockquote bullist numlist backcolor | link image media | removeformat help',
+        menubar: false,
+        setup: (content) => {
+            // Apply the focus effect
+            content.on("init", () => {
+                content.getContainer().style.transition = "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out";
+            });
+            content.on("focus", () => {
+                (content.getContainer().style.boxShadow = "0 0 0 .2rem rgba(0, 123, 255, .25)"),
+                (content.getContainer().style.borderColor = "#80bdff");
+            });
+            content.on("blur", () => {
+                (content.getContainer().style.boxShadow = ""),
+                    (content.getContainer().style.borderColor = "");
+            });
+        },
+    });
+</script>
+{% endblock %}

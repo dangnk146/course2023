@@ -1,0 +1,10 @@
+version: '3'
+services:
+  db:
+    image: bitnami/postgresql
+    environment:
+      - POSTGRESQL_DATABASE=course
+      - POSTGRESQL_USERNAME=course
+      - POSTGRESQL_PASSWORD=course
+    ports:
+      - "5433:5432"

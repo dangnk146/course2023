@@ -1,0 +1,75 @@
+{% extends 'indexTeacher.html' %}
+{% block title %}
+<title> {{class_membership.name}} Bảng điều khiển giáo viên | Môn học</title>
+{% endblock %}
+
+
+{% block titleh1 %}
+Quản lý môn học ||| Lớp: {{class_membership.name}}
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+<li class="breadcrumb-item ">Bảng điều khiển giáo viên</li>
+<li class="breadcrumb-item active">{{class_membership.name}}</li>
+{% endblock %}
+
+{% block {{class_membership.name}} %}
+active
+{% endblock %}
+
+{% block body %}
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-12">
+            <a href="{% url 'manageTeacherClass' class_membership.id %}" class="btn btn-warning">Danh sách môn học</a>
+            <a href="{% url 'manageTeacherClassStudent' class_membership.id %}" class="btn btn-primary">Danh sách học sinh</a>
+        </div>
+        <div class="col-lg-12">
+            <!-- mẫu danh sách học sinh và giáo viên -->
+        
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Bảng danh sách <b>NHỮNG HỌC SINH</b> </h5>
+                    <!-- Table with stripped rows -->
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Ảnh đại diện</th>
+                                <th scope="col">Họ và tên</th>
+                                <th scope="col">Ngày tháng năm sinh</th>
+                                <th scope="col">Địa chỉ</th>
+                                <th scope="col">Liên hệ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in get_student_class_memberships %}
+                            <tr>
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td>
+                                    {% if user.image %}
+                                    <img src="{{user.image.url}}" alt="mdo" width="32" height="32"
+                                        class="rounded-circle">
+                                        {% else %}
+                                        <img src="" alt="mdo" width="32" height="32"
+                                        class="rounded-circle">
+                                        {% endif %}
+                                    </td>
+                                <td>{{user.user.first_name}} {{user.user.last_name}}</td>
+                                <td>{{user.dob}}</td>
+                                <td>{{user.address}}</td>
+                                <td>{{user.contact}}</td>
+                                
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

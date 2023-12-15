@@ -1,0 +1,78 @@
+{% extends 'index.html' %}
+{% block title %}
+<title> {{subcategory.name}} {{category.name}} | Homepage | Course2023</title>
+{% endblock %}
+
+<!-- Have active -->
+{% block category.name %}active{% endblock %}
+{% block Home %}selectedlink{% endblock %}
+
+
+{% block body %}
+<div class="container-fluid mt-5 " style="height: 75vh;">
+    <div class="row">
+        <div class="col-12 col-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Tin tức mới</h2>
+                </div>
+                <div class="card-body">
+                    {% for new in news %}
+                    {% if new.subcategory.category.id and new.subcategory.id and new.id %}
+                    <div class="nav-item py-2 my-2">
+                        <a
+                            href="{% url 'homeSubCategoryBlog' new.subcategory.category.id new.subcategory.id new.id %}">{{new.name}}</a>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-10">
+            <div class="card">
+                {% if subcategory.name == "none" %}
+                <div class="card-header bg-primary text-light">
+                    <h2> Môn học {{category.name}}</h2>
+                </div>
+                {% else %}
+                <div class="card-header bg-primary text-light">
+                    <h2> Môn học {{subcategory.name}}</h2>
+                </div>
+                {% endif %}
+                
+                <div class="card-body">
+                    {% for blog in blogs %}
+                    <div class="nav-item py-2 my-2"><a
+                            href="{% url 'homeSubCategoryBlog' category.id subcategory.id blog.id %}">{{blog.name}}</a>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div aria-label="Page navigation example" class=" px-5 w-100">
+                    <ul class="pagination justify-content-end">
+                        {% if blogs.has_previous %}
+                        <!-- <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li> -->
+                        <li class="page-item"><a class="page-link"
+                                href="?page={{ blogs.previous_page_number }}">previous</a></li>
+                        {% endif %}
+
+                        {% for page_num in blogs.paginator.page_range %}
+                        <li class="page-item{% if page_num == blogs.number %} active{% endif %}">
+                            <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                        </li>
+                        {% endfor %}
+
+                        {% if blogs.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ blogs.next_page_number }}">next</a>
+                        </li>
+                        <!-- <li class="page-item"><a class="page-link" href="?page={{ blogs.paginator.num_pages }}">last &raquo;</a></li> -->
+                        {% endif %}
+
+                    </ul>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

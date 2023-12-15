@@ -1,0 +1,142 @@
+{% extends 'indexstaff.html' %}
+{% block title %}
+<title>Môn học Detail {{factory.name}} |Quản lý môn học | Admin page | Môn học</title>
+{% endblock %}
+
+{% block toast %}
+{% if result == "fail" %}
+<div class="toast show alert-danger" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+        <img src="https://cdn-icons-png.flaticon.com/512/5234/5234326.png" width="10px" class="rounded me-2" alt="...">
+        <strong class="me-auto">Alert</strong>
+        <small class="text-muted">Now</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+        Môn học doesn't add, please check again!
+    </div>
+</div>
+{% endif %}
+{% if result == "success" %}
+<div class="toast show alert-success" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+        <img src="https://cdn-icons-png.flaticon.com/512/5234/5234326.png" width="10px" class="rounded me-2" alt="...">
+        <strong class="me-auto">Alert</strong>
+        <small class="text-muted">Now</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+        Môn học add success!
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+
+{% block titleh1 %}
+Môn học in {{factory.name}}
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+<li class="breadcrumb-item active"><a href="{% url 'manageCourseCourse' %}">Môn học</a></li>
+<li class="breadcrumb-item active">{{factory.name}}</li>
+{% endblock %}
+
+{% block manageCourseCourse %}
+active
+{% endblock %}
+
+{% block body %}
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Thêm Tên COURSE</h5>
+                    <form method="post" action="" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-2">
+                                <select class="form-control" id="factory" name="factory">
+                                    <option value="{{factory.id}}">{{factory.name}}</option>
+                                </select>
+
+                            </div>
+                            <div class="col-2">
+                                <select class="form-control" id="classroom" name="classroom">
+                                    <option value="">Lựa chọn một Lớp</option>
+                                    {% for item in class_membership %}
+                                    <option value="{{ item.id }}">{{ item.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-12"></div>
+                            <div class="col-6">
+                                <label for="formFile" class="form-label">Tên</label>
+                                <input type="text" name="course" id="form3Example1" class="form-control" />
+
+                            </div>
+                            <div class="col-6">
+                                <label for="formFile" class="form-label">Email giáo viên</label>
+                                <input type="email" name="email" id="form3Example1" class="form-control" />
+
+                            </div>
+                            <div class="col-6 ">
+                                <label for="formFile" class="form-label">Image</label>
+                                <input class="form-control" name="image" type="file" id="formFile">
+                            </div>
+                            <div class="col-12 mt-3">
+                                <button type="submit" class="btn btn-primary btn-block">+ Thêm</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Bảng danh sách <b>COURSE</b></h5>
+                    <!-- Table with stripped rows -->
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Tên</th>
+                                <th scope="col">giáo viên</th>
+                                <th scope="col">Email giáo viên</th>
+                                <th scope="col">Lớp học</th>
+                                <th scope="col">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for course in courses %}
+                            <tr>
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td><img src="{{course.image.url}}" alt="mdo" width="70"></td>
+                                <td>{{course.name}}</td>
+                                <td>{{course.teacher.user.first_name}} {{course.teacher.user.last_name}}</td>
+                                <td>{{course.teacher.user.email}}</td>
+                                <td>{{course.class_membership}}</td>
+                                <td>
+                                    <a href="{% url 'manageCourseCourseEdit' course.id %}"
+                                        class="btn btn-primary">Sửa</a>
+                                    <form method="post" action="{% url 'manageCourseCourseDelete' pid=course.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-block mt-1">Xóa</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

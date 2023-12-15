@@ -1,0 +1,81 @@
+{% extends 'indexstaff.html' %}
+{% block title %}
+<title>New user | Admin page | Môn học</title>
+{% endblock %}
+
+
+{% block titleh1 %}
+New user
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+<li class="breadcrumb-item active">Tài khoản mới</li>
+{% endblock %}
+
+{% block newuser %}
+active
+{% endblock %}
+
+{% block body %}
+<section class="section dashboard">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Bảng danh sách <b>NHỮNG HỌC SINH</b> chưa kích hoạt</h5>
+                    <!-- Thêm form để >Tải lên< tệp Excel -->
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="excel_file">Tải file excel học sinh</label>
+                            <input type="file" class="form-control-file" id="excel_file" name="excel_file">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Tải lên</button>
+                    </form>
+                    <!-- Table with stripped rows -->
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Ảnh đại diện</th>
+                                <th scope="col">Tên đăng nhập</th>
+                                <th scope="col">Ngày tháng năm sinh</th>
+                                <th scope="col">Địa chỉ</th>
+                                <th scope="col">Liên hệ</th>
+                                <th scope="col">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in get_inactive_students %}
+                            <tr>
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td>
+                                    {% if user.image %}
+                                    <img src="{{user.image.url}}" alt="mdo" width="32" height="32"
+                                        class="rounded-circle">
+                                        {% else %}
+                                        <img src="" alt="mdo" width="32" height="32"
+                                        class="rounded-circle">
+                                        {% endif %}
+                                    </td>
+                                <td>{{user.user.username}}</td>
+                                <td>{{user.dob}}</td>
+                                <td>{{user.address}}</td>
+                                <td>{{user.contact}}</td>
+                                <td><a href="{% url 'newUserStudentAccess' user.id %}"
+                                        class="btn btn-success">Thêm vào</a>
+                                    <a href="{% url 'newUserStudentDelete' user.id %}" class="btn btn-danger">Xóa</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

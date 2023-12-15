@@ -1,0 +1,50 @@
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.card-course {
+    padding: 10px 20px;
+    height: 100px;
+    background-position: center;
+    background-color: #fff; /* Màu nền ban đầu */
+    transition: background-color 0.3s, transform 0.3s;
+}
+.card-course-exam{
+    height: 150px;
+}
+
+.card-course:hover {
+    background-color: #ccc; /* Màu xám khi hover */
+    transform: scale(1.05); /* Phóng to 1.05 lần khi hover */
+}
+
+.card-course h4 {
+    color: #333; /* Màu chữ ban đầu */
+    transition: color 0.3s;
+}
+
+.card-course:hover h4 {
+    color: #00f; /* Màu xanh khi hover */
+}
+.card-list-course {
+    min-height: 300px;
+    max-height: 800px;
+    overflow-y: auto;
+}
+
+.card-list-course::-webkit-scrollbar {
+    width: 12px; /* Độ rộng thanh cuộn */
+}
+
+.card-list-course::-webkit-scrollbar-thumb {
+    background-color: #888; /* Màu nền của nút cuộn */
+    border-radius: 6px; /* Độ cong của nút cuộn */
+}
+
+.card-list-course::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Màu nền nút cuộn khi hover */
+}
+

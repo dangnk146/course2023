@@ -1,0 +1,67 @@
+{% extends 'index.html' %}
+{% block title %}
+<title>Homepage | Course2023</title>
+{% endblock %}
+
+<!-- Have active -->
+{% block HomeActive %}active{% endblock %}
+{% block Home %}selectedlink{% endblock %}
+
+{% block toast %}
+{% if request.GET.alert == "notsetclass" %}
+<div class="toast show bg-warning" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+        <img src="https://cdn-icons-png.flaticon.com/512/5234/5234326.png" width="10px" class="rounded me-2" alt="...">
+        <strong class="me-auto">Alert</strong>
+        <small class="text-muted">Now</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body ">
+        Học sinh doesn't set class, please contact teacher!
+    </div>
+</div>
+{% endif %}
+{% if isLogin %}
+<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+        <img src="https://cdn-icons-png.flaticon.com/512/5234/5234326.png" width="10px" class="rounded me-2" alt="...">
+        <strong class="me-auto">Alert</strong>
+        <small class="text-muted">Now</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+        Đăng nhập successfully!
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid rounded border mt-5 shadow" style="height: 75vh;">
+    <!-- <p class="text-center">Thích gì thì code vô</p> -->
+    <div class="row">
+        <div class="col-12 col-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Tin tức mới</h2>
+                </div>
+                <div class="card-body">
+                    {% for new in news %}
+                    {% if new.subcategory.category.id and new.subcategory.id and new.id %}
+                    <div class="nav-item py-2 my-2">
+                        <a href="{% url 'homeSubCategoryBlog' new.subcategory.category.id new.subcategory.id new.id %}">{{new.name}}</a>
+                    </div>
+                    <hr class="border-1">
+                    {% endif %}
+                    {% endfor %}    
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-10">
+            <h3 class="mt-5 p-5 tex{{class_membership.name}}t-center text-bg-primary">Chào,  web Course2023</h3>
+        </div>
+
+
+    </div>
+</div>
+{% endblock %}
