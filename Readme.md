@@ -11,7 +11,6 @@
 ## Step 3: Code
 
     python -m pip install pandas
-    python3 -m pip install python-pptx python-docx2pdf
 
 
 # Run project
