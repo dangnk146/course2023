@@ -135,4 +135,4 @@ urlpatterns = [
     path('managehome/category/(<int:category_id>)/subcategory/(<int:subcategory_id>)/blogs/edit/(<int:blog_id>)', staff_required(ManageBlogsEdit), name="manageHomePagBlogsEdit"),
     path('managehome/category/(<int:category_id>)/subcategory/(<int:subcategory_id>)/blogs/delete/(<int:blog_id>)', staff_required(ManageBlogsDelete), name="manageHomePagBlogsDelete"),
     
-]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -8,9 +8,7 @@ from users.models import *
 from .helper import *
 from django.urls import reverse
 
-import os
-import tempfile
-from pptx import Presentation
+
 
 
 
@@ -123,11 +121,7 @@ def ManageTeacherClassCourse(request, class_membership_id, pid):
     d = {'data': data, 'class_membership': class_membership, 'class_memberships': class_membershipss, 'course': course, 'taglessioncourses':taglessioncourses, 'tags':tags, 'taglessionexamcourses': taglessionexamcourses}
     return render(request, 'dashboardTeacherClassCourseId.html', d)
 
-def pptx_to_pdf(pptx_path, pdf_path):
-    presentation = Presentation(pptx_path)
-    pptx_path, pdf_path = map(os.path.abspath, [pptx_path, pdf_path])
-    libreoffice_command = 'libreoffice --headless --convert-to pdf'.split() + [pptx_path] + ['--outdir', os.path.dirname(pdf_path)]
-    os.system(' '.join(libreoffice_command))
+
 
 def ManageTeacherClassCourseLeassonAdd(request, class_membership_id, pid, id_chuong):
     if request.method == "GET":
