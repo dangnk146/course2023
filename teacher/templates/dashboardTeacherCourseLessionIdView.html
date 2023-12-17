@@ -53,8 +53,9 @@ active
                     </div>
                     {% endif %}
                     {% autoescape off %}
-                    {{ lession.content | safe }}
-                    {% endautoescape %}
+                    {{ lession.content }}
+                {% endautoescape %}
+                
                 </div>
             </div>
         </div>

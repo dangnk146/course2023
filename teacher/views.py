@@ -143,10 +143,26 @@ def ManageTeacherClassCourseLeassonAdd(request, class_membership_id, pid, id_chu
 
         data = Lession.objects.create(name=name,content=content, course=course, chuongTag=chuongTag)
 
-        data.image = request.FILES['image']
-        data.baigiangtuongtac = request.FILES['baigiangtuongtac']
-        data.pptx = request.FILES['pptx']
-        data.pdf = request.FILES['pdf']
+        try:
+            if(request.FILES['image']):
+                data.image = request.FILES['image']
+        except:
+            pass
+        try:
+            if(request.FILES['baigiangtuongtac']):
+                data.baigiangtuongtac = request.FILES['baigiangtuongtac']
+        except:
+            pass
+        try:
+            if(request.FILES['pptx']):
+                data.pptx = request.FILES['pptx']
+        except:
+            pass
+        try:
+            if(request.FILES['pdf']):
+                data.pdf = request.FILES['pdf']
+        except:
+            pass
 
         data.save()
 
