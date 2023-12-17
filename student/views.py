@@ -40,7 +40,7 @@ def ManageStudentCourse(request, id_course):
     course = get_object_or_404(Course, id=id_course)
     list_lession = TagLessionCourse.objects.filter(course=course)
     list_exam_lession = TagLessionExameCourse.objects.filter(course=course)
-    tags = ChuongTag.objects.all().order_by('created_at')
+    tags = ChuongTag.objects.filter(course=course).order_by('created_at')
 
     taglessioncourses= Lession.objects.filter(course=course)
     taglessionexamcourses= LessionExam.objects.filter(course=course)
