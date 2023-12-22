@@ -48,7 +48,7 @@ active
                                             {% if lession.image %}
                                             <a href="{{lession.image.url}}">{{lession.image.url}}</a>
                                             {% else %}
-                                            No image
+                                            No data
                                             {% endif %}
                                         <input class="form-control" name="image"   type="file"
                                             id="formFile">
@@ -58,7 +58,11 @@ active
                                     <div class="form-outline">
                                         <label class="form-label" for="formFile" for="form3Example1">Bài giảng tương tác
                                             học <i class="alert-warning">(không bắc buộc)</i></label>
+                                            {% if lession.baigiangtuongtac %}
                                             <a href="{{lession.baigiangtuongtac.url}}">{{lession.baigiangtuongtac.url}}</a>
+                                            {% else %}
+                                            No data
+                                            {% endif %}
 
                                         <input class="form-control" name="baigiangtuongtac" value="{{lession.baigiangtuongtac}}" type="file"  id="formFile">
                                     </div>
@@ -66,15 +70,22 @@ active
                                 <div class="col-12 my-2">
                                     <div class="form-outline">
                                         <label class="form-label" for="formFile" for="form3Example1">Bai giang điện tử(Slides, pptx)<i class="alert-warning">(không bắc buộc)</i></label>
+                                        {% if lession.pptx %}
                                         <a href="{{lession.pptx.url}}">{{lession.pptx.url}}</a>
+                                        {% else %}
+                                            No data
+                                            {% endif %}
 
                                         <input class="form-control" name="pptx" value="{{lession.pptx}}" type="file"
                                             id="formFile">
                                     </div>
                                     <div class="form-outline">
                                         <label class="form-label" for="formFile" for="form3Example1">Bai giang điện tử(FILE PDF ĐỂ XEM ĐƯỢC)<i class="alert-warning">(không bắc buộc)</i></label>
+                                        {% if lession.pdf %}
                                         <a href="{{lession.pdf.url}}">{{lession.pdf.url}}</a>
-
+                                        {% else %}
+                                        No data
+                                        {% endif %}
                                         <input class="form-control" name="pdf" value="{{lession.pdf}}" type="file"
                                             id="formFile">
                                     </div>
