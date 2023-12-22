@@ -230,8 +230,11 @@ def ManageTeacherClassCourseLessionView(request, class_membership_id, id_course,
     teacher = get_object_or_404(TeacherUser, id=data.id)
 
     class_membership = ''
-    class_membership = MembershipTeacherUser.objects.get(teacher=data)
+    
+    class_membership = MembershipTeacherUser.objects.filter(teacher=data)[0]
+    
 
+    print(class_membership)
     courses = Count_course_student_memberships(class_membership.class_membership)
     course = get_object_or_404(Course, id=id_course)
     
@@ -247,10 +250,11 @@ def ManageTeacherClassCourseLessionView(request, class_membership_id, id_course,
 def ManageTeacherClassCourseLessionExamView(request, class_membership_id, id_course, id_lession):
     user = User.objects.get(username=request.user.username)
     data = GetUser(user)
-    # teacher = get_object_or_404(TeacherUser, id=data.id)
+    teacher = get_object_or_404(TeacherUser, id=data.id)
 
-    class_membership = ''
-    class_membership = MembershipTeacherUser.objects.get(teacher=data)
+    
+    class_membership = MembershipTeacherUser.objects.filter(teacher=data)[0]
+    
 
     courses = Count_course_student_memberships(class_membership.class_membership)
     course = get_object_or_404(Course, id=id_course)
