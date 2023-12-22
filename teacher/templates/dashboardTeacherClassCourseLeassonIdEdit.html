@@ -45,7 +45,11 @@ active
                                     <div class="form-outline">
                                         <label class="form-label" for="formFile" for="form3Example1">Ảnh đại diện bài
                                             học <i class="alert-warning">(không bắc buộc)</i></label>
+                                            {% if data.image %}
                                             <a href="{{lession.image.url}}">{{lession.image.url}}</a>
+                                            {% else %}
+                                            No image
+                                            {% endif %}
                                         <input class="form-control" name="image"   type="file"
                                             id="formFile">
                                     </div>
