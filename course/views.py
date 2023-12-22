@@ -71,11 +71,15 @@ def ManageCourseCourse(request):
     if request.method == "POST":
         factory_id  = request.POST['factory']
         name_course  = request.POST['course']
-        image = request.FILES['image']
+        if request.FILES:
+            image = request.FILES['image']
         factory = get_object_or_404(Factory, id=factory_id)
         result = 'fail'
         if (factory and name_course):
-            Course.objects.create(name=name_course, factory=factory, image=image)
+            if request.FILES:
+                Course.objects.create(name=name_course, factory=factory)
+            else:
+                Course.objects.create(name=name_course, factory=factory, image=image)
             result = 'success'
         return redirect('manageCourseCourse')
 
