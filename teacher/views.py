@@ -230,12 +230,7 @@ def ManageTeacherClassCourseLessionView(request, class_membership_id, id_course,
     teacher = get_object_or_404(TeacherUser, id=data.id)
 
     class_membership = ''
-    if(GetMembershipTeacherUser(data)):
-        class_membership = MembershipTeacherUser.objects.get(teacher=data)
-    else:
-        url = reverse('home') + '?alert=notsetclass'
-        return redirect(url)
-
+    class_membership = MembershipTeacherUser.objects.get(teacher=data)
 
     courses = Count_course_student_memberships(class_membership.class_membership)
     course = get_object_or_404(Course, id=id_course)
