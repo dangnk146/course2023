@@ -56,7 +56,7 @@ active
                         {% for record in taglessionexamcourses %}
                         {% if record.chuongTag == tag %}
 
-                        <div class="col-6">
+                        <div class="col-12">
                             {% if record.images %}
                             <div class="p-3 rounded card-course-exam card-course shadow">
                             {% else %}
@@ -72,8 +72,8 @@ active
                                     </a>
                             </div>
                             {% endif %}
-                            {% endfor %}
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
