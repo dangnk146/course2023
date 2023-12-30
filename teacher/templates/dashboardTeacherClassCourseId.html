@@ -40,20 +40,19 @@ active
                                 <div class="ms-3"></div>
                             <a href="{% url 'manageTeacherClassCourseLessionExamAdd' class_membership.id course.id tag.id %}"
                             class="btn btn-outline-primary ">Thêm bài kiểm tra</a>
-                            <a href="{% url 'manageTeacherClassCoursetracnghiemAdd' class_membership.id course.id tag.id %}"
-                            class="btn btn-outline-primary ms-3">Bài kiểm tra trắc nghiệm</a>
+                            <!-- <a href="{% url 'manageTeacherClassCoursetracnghiemAdd' class_membership.id course.id tag.id %}"
+                            class="btn btn-outline-primary ms-3">Bài kiểm tra trắc nghiệm</a> -->
                         </span>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body align-items-center">
                         <div class="row mt-3">
                             {% for record in taglessioncourses %}
                             {% if record.chuongTag == tag %}
-                            <div class="col-4 position-relative">
+                            <div class="col-4 m-1 shadow position-relative">
                                 {% if record.image %}
                                 <div class="p-3 rounded card-course" style="background-image: url('{{record.image.url}}');">
                                     {% else %}
-                                    <div class="p-3 rounded card-course"
-                                        style="background-image: url('{{course.image.url}}');">
+                                    <div class="p-3 rounded card-course">
                                         {% endif %}
                                         <h4 class=" bold">{{record.name}}</h4>
                                         <div class="">
@@ -73,7 +72,7 @@ active
                                 {% for record in taglessionexamcourses %}
                                 {% if record.chuongTag == tag %}
 
-                                <div class="col-6">
+                                <div class="col-6 mb-3">
                                     {% if record.image %}
                                     <div class="p-3 rounded card-course-exam card-course shadow">
                                         {% else %}

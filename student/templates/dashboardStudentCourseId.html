@@ -34,29 +34,28 @@ active
                     <div class="card-header w-100">
                         <h6 class="h3 bold text-success" style="font-weight: 700;">{{tag.name}}</h6>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body align-items-center">
                         <div class="row mt-3">
                             {% for record in taglessioncourses %}
                             {% if record.chuongTag == tag %}
-                            <a class="col-4 position-relative" href="{% url 'manageStudentCourseLessonView' course.id record.id %}">
+                            <a class="col-5 position-relative shadow m-1" href="{% url 'manageStudentCourseLessonView' course.id record.id %}">
                                 {% if record.images %}
                                 <div class="p-3 rounded card-course"
                                     style="background-image: url('{{record.images}}');">
                                     {% else %}
-                                    <div class="p-3 rounded card-course"                                        
-                                        style="background-image: url('{{course.image.url}}');">
+                                    <div class="p-3 rounded card-course">
                                         {% endif %}
                                         <h4 class=" bold">{{record.name}}</h4>
                                 </div>
                             </a>
+                            {% endif %}
+                            {% endfor %}
                         </div>
-                        {% endif %}
-                        {% endfor %}
                         <div class="col-12 my-3"></div>
                         {% for record in taglessionexamcourses %}
                         {% if record.chuongTag == tag %}
 
-                        <div class="col-12">
+                        <div class="col-12 m-1">
                             {% if record.images %}
                             <div class="p-3 rounded card-course-exam card-course shadow">
                             {% else %}
