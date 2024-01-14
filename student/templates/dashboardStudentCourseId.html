@@ -75,8 +75,7 @@ active
                                             href="{% url 'manageStudentCourseLessonViewExam' course.id record.id %}">
                                             <i class="text-danger">Bài kiểm tra
                                                 ***</i>
-                                            <h4 class=" bold"> {% if
-                                                record.name|length > 35 %}
+                                            <h4 class=" bold"> {% if record.name|length > 35 %}
                                                 {{ record.name|slice:":20" }}...
                                                 {% else %}
                                                 {{ record.name }}
@@ -88,7 +87,6 @@ active
                                             </div>
                                         </a>
                                     </div>
-                                    {% endif %}
                                 </div>
                                 {% endfor %}
                             </div>
