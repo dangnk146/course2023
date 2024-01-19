@@ -6,10 +6,24 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
-  storageClassName:  nfs-retain
+  storageClassName: nfs-retain
   resources:
     requests:
       storage: 5Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name:  postgres-data-sync-master-pv
+  namespace:  course2023
+  labels:
+    type: local
+spec:
+  storageClassName: nfs-retain
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
   nfs:
-    path: "/mnt/nfs/"
+    path: "/mnt/nfs/postgres-data-sync-master-pv"
     server: 192.168.10.165
