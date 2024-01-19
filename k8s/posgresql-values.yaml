@@ -1,74 +1,50 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
-  name: posgresql-postgresql
-  namespace: course2023
+  name: postgresql-deployment
+  labels:
+    app: course
 spec:
   replicas: 1
-  serviceName: posgresql-postgresql-hl
   selector:
     matchLabels:
-      app.kubernetes.io/component: primary
-      app.kubernetes.io/instance: posgresql
-      app.kubernetes.io/name: postgresql
+      app: course
   template:
     metadata:
       labels:
-        app.kubernetes.io/component: primary
-        app.kubernetes.io/instance: posgresql
-        app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: postgresql
-        app.kubernetes.io/version: 16.1.0
-        helm.sh/chart: postgresql-13.3.1
+        app: course
     spec:
       containers:
       - name: postgresql
-        image: docker.io/bitnami/postgresql:16.1.0-debian-11-r20
+        image: postgres:15-alpine3.18
         env:
+        - name: POSTGRES_USER
+          value: course
+        - name: POSTGRES_DB
+          value: course
         - name: POSTGRES_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              key: postgres-password
-              name: posgresql-postgresql
-        - name: POSTGRES_INITSCRIPTS_USERNAME
-          value: course2023
-        - name: POSTGRES_INITSCRIPTS_PASSWORD
-          value: course2023
+          value: course
         ports:
         - containerPort: 5432
-          name: tcp-postgresql
-          protocol: TCP
         volumeMounts:
-        - mountPath: /dev/shm
-          name: dshm
-        - mountPath: /bitnami/postgresql
-          name: data
-      initContainers:
-      - name: init-chmod-data
-        image: docker.io/bitnami/os-shell:11-debian-11-r94
-        command:
-        - /bin/sh
-        - '-ec'
-        - >
-          chown 1001:1001 /bitnami/postgresql
-
-          mkdir -p /bitnami/postgresql/data
-
-          chmod 700 /bitnami/postgresql/data
-
-          find /bitnami/postgresql -mindepth 1 -maxdepth 1 -not -name "conf"
-          -not -name ".snapshot" -not -name "lost+found" | \
-            xargs -r chown -R 1001:1001
-          chmod -R 777 /dev/shm
-        volumeMounts:
-        - mountPath: /bitnami/postgresql
-          name: data
-        - mountPath: /dev/shm
-          name: dshm
-  updateStrategy:
-    rollingUpdate:
-      partition: 0
-    type: RollingUpdate
+        - name: postgresql-storage
+          mountPath: /var/lib/postgresql/data
+  volumes:
+  - name: postgresql-storage
+    persistentVolumeClaim:
+      claimName: postgresql-pv-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgresql-service
+  labels:
+    app: course
+spec:
+  ports:
+  - port: 5432
+  selector:
+    app: course
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
