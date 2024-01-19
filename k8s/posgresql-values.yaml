@@ -3,7 +3,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: postgresql
+  name: course2023
+  namespace: course2023
 spec:
   replicas: 1
   selector:
