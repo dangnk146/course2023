@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgresql-deployment
+  namespace: course2023
   labels:
     app: course
 spec:
@@ -38,6 +39,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: postgresql-service
+  namespace: course2023
   labels:
     app: course
 spec:
