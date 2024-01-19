@@ -1,9 +1,71 @@
-primary:
-  persistence:
-    existingClaim: postgresql-pv-claim
-  initdb:
-    name: course2023
-    user: course2023
-    password: course2023
-volumePermissions:
-  enabled: true
+# deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgresql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgresql
+  template:
+    metadata:
+      labels:
+        app: postgresql
+    spec:
+      containers:
+      - name: postgresql
+        image: bitnami/postgresql
+        env:
+        - name: POSTGRES_DB
+          value: course2023
+        - name: POSTGRES_USER
+          value: course2023
+        - name: POSTGRES_PASSWORD
+          value: course2023
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: postgresql-data
+          mountPath: /bitnami/postgresql
+  volumeClaimTemplates:
+  - metadata:
+      name: postgresql-data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: "your-storage-class"
+      resources:
+        requests:
+          storage: 8Gi # adjust as needed
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgresql-pv-claim
+  namespace: course2023
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: nfs-retain
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgresql-pv
+  namespace: course2023
+  labels:
+    type: local
+spec:
+  storageClassName: nfs-retain
+  capacity:
+    storage: 10Gi
+  accessModes:
+  - ReadWriteOnce
+  nfs:
+    path: "/mnt/nfs/postgresql"
+    server: 192.168.10.165
