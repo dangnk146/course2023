@@ -32,7 +32,7 @@
 
 # Push image to docker hub
 
-    docker tag course2023master:latest dangnguyensonia/course2023master
+    docker tag course2023master:local dangnguyensonia/course2023master
     docker push dangnguyensonia/course2023master
 
 

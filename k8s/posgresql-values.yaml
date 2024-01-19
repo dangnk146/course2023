@@ -1,0 +1,9 @@
+primary:
+  persistence:
+    existingClaim: postgresql-pv-claim
+  initdb:
+    name: course2023
+    user: course2023
+    password: course2023
+volumePermissions:
+  enabled: true

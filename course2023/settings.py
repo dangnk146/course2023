@@ -90,11 +90,11 @@ XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'Fe1GB32--CDdbB1f26*BD21GceBG3C*b',
-        'HOST': 'roundhouse.proxy.rlwy.net',
-        'PORT': '14510',
+        'NAME': 'course',
+        'USER': 'course',
+        'PASSWORD': 'course',
+        'HOST': 'posgresql-postgresql',
+        'PORT': '5432',
     }
 }
 
