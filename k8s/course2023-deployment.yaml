@@ -28,14 +28,14 @@ spec:
   selector:
     app: course-app
   ports:
-    - protocol: TCP
-      port: 8000
-      targetPort: 8000
+  - protocol: TCP
+    port: 8000
+    targetPort: 8000
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: prometheus-ingress
+  name: course-ingress
   namespace: course2023
 spec:
   ingressClassName: nginx
