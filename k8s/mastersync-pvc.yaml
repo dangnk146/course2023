@@ -6,7 +6,10 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
-  storageClassName: hostpath
+  storageClassName:  nfs-retain
   resources:
     requests:
       storage: 5Gi
+  nfs:
+    path: "/mnt/nfs/"
+    server: 192.168.10.165
