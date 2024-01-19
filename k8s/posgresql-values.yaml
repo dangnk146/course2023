@@ -1,45 +1,74 @@
-# deployment.yaml
-
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: course2023
+  name: posgresql-postgresql
   namespace: course2023
 spec:
   replicas: 1
+  serviceName: posgresql-postgresql-hl
   selector:
     matchLabels:
-      app: postgresql
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: posgresql
+      app.kubernetes.io/name: postgresql
   template:
     metadata:
       labels:
-        app: postgresql
+        app.kubernetes.io/component: primary
+        app.kubernetes.io/instance: posgresql
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: postgresql
+        app.kubernetes.io/version: 16.1.0
+        helm.sh/chart: postgresql-13.3.1
     spec:
       containers:
       - name: postgresql
-        image: bitnami/postgresql
+        image: docker.io/bitnami/postgresql:16.1.0-debian-11-r20
         env:
-        - name: POSTGRES_DB
-          value: course2023
-        - name: POSTGRES_USER
-          value: course2023
         - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: postgres-password
+              name: posgresql-postgresql
+        - name: POSTGRES_INITSCRIPTS_USERNAME
+          value: course2023
+        - name: POSTGRES_INITSCRIPTS_PASSWORD
           value: course2023
         ports:
         - containerPort: 5432
+          name: tcp-postgresql
+          protocol: TCP
         volumeMounts:
-        - name: postgresql-data
-          mountPath: /bitnami/postgresql
-  volumeClaimTemplates:
-  - metadata:
-      name: postgresql-data
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      storageClassName: "your-storage-class"
-      resources:
-        requests:
-          storage: 8Gi # adjust as needed
+        - mountPath: /dev/shm
+          name: dshm
+        - mountPath: /bitnami/postgresql
+          name: data
+      initContainers:
+      - name: init-chmod-data
+        image: docker.io/bitnami/os-shell:11-debian-11-r94
+        command:
+        - /bin/sh
+        - '-ec'
+        - >
+          chown 1001:1001 /bitnami/postgresql
 
+          mkdir -p /bitnami/postgresql/data
+
+          chmod 700 /bitnami/postgresql/data
+
+          find /bitnami/postgresql -mindepth 1 -maxdepth 1 -not -name "conf"
+          -not -name ".snapshot" -not -name "lost+found" | \
+            xargs -r chown -R 1001:1001
+          chmod -R 777 /dev/shm
+        volumeMounts:
+        - mountPath: /bitnami/postgresql
+          name: data
+        - mountPath: /dev/shm
+          name: dshm
+  updateStrategy:
+    rollingUpdate:
+      partition: 0
+    type: RollingUpdate
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
