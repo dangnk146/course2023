@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: postgresql
-        image: postgres:15-alpine3.18
+        image: postgres:9.6.2-alpine
         env:
         - name: POSTGRES_USER
           value: course
