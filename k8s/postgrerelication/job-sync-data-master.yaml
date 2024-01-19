@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sync-master-data
+  namespace: course2023
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure #restart if fail
+      containers:
+      - name: sync-master-data
+        image: postgres:11
+        command: ["sh", "-c", 'PGPASSWORD="postgres" pg_basebackup -h postgres-master-service -D /var/lib/slave-postgresql/data -U repuser -vP']
+        volumeMounts:
+        - mountPath: /var/lib/slave-postgresql/data
+          name: postgres-data
+      volumes:
+      - name: postgres-data
+        persistentVolumeClaim:
+          claimName: postgres-data-sync-master
