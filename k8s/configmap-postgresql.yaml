@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: db-standby-conf-files-config
+  name: postgre-master-configmap
   namespace: course2023
 data:
   postgresql.conf: |
