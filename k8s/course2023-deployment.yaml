@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: course-app
-        image: dangnguyensonia/course2023master
+        image: dangnguyensonia/course2023master:v2.0
         ports:
         - containerPort: 8000
 ---
