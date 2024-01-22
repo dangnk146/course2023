@@ -33,7 +33,8 @@
 # Push image to docker hub
 
     docker tag course2023master:local dangnguyensonia/course2023master
-    docker push dangnguyensonia/course2023master
+    docker build -t dangnguyensonia/course2023master:v3.0 .
+    docker push dangnguyensonia/course2023master:v3.0
 
 
 ## Change to run database in docker
