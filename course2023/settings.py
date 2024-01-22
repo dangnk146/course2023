@@ -93,7 +93,7 @@ DATABASES = {
         'NAME': 'course',
         'USER': 'course',
         'PASSWORD': 'course',
-        'HOST': 'db-postgresql-ha-postgresql-0',
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
         'PORT': '5432',
     }
 }
