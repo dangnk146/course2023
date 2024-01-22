@@ -93,7 +93,7 @@ DATABASES = {
         'NAME': 'course',
         'USER': 'course',
         'PASSWORD': 'course',
-        'HOST': 'posgresql-postgresql',
+        'HOST': 'db-postgresql-ha-postgresql',
         'PORT': '5432',
     }
 }
