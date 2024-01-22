@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: postgre-account
-  namespace: course2023
-data:
-  POSTGRES_USER: course
-  POSTGRES_PASSWORD: course
-  TIMESCALEDB_TELEMETRY: "off"
