@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: postgre-master-configmap
+  name: postgres-slave-configmap
   namespace: course2023
 data:
   postgresql.conf: |
