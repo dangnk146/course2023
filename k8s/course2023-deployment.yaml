@@ -18,7 +18,7 @@ spec:
         image: dangnguyensonia/course2023master:v5.0
         env:
         - name: DB_HOST
-          value: "db-replicaset-postgresql"
+          value: "db-postgresql-ha-pgpool"
         ports:
         - containerPort: 8000
 ---
