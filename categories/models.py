@@ -29,7 +29,7 @@ class Blogs(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     subcategory = models.ForeignKey(
-        SubCategory, on_delete=models.CASCADE, null=True)
+        'SubCategory', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.name
