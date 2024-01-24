@@ -34,7 +34,7 @@
 
     docker tag course2023master:local dangnguyensonia/course2023master
     docker build -t dangnguyensonia/course2023master:v3.0 .
-    docker push dangnguyensonia/course2023master:v3.0
+    docker push dangnguyensonia/course2023master:v6-mysql
 
 
 ## Change to run database in docker
