@@ -2,6 +2,7 @@ pandas==2.0.3
 Django==4.2.8
 psycopg==3.1.14
 psycopg2==2.9.9
+mysqlclient==2.2.1
 django-braces==1.15.0
 django-cors-headers==4.1.0
 django-filter==23.2
