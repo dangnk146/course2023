@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: course-app-mysql
-        image: dangnk/mysqlcourse:mysql-9
+        image: dangnk/mysqlcourse:mysql-10
         env:
         - name: DB_HOST
           value: "db-mysql"
