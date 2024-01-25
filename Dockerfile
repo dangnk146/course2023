@@ -7,6 +7,9 @@ RUN apt-get update && apt-get install -y libffi-dev
 # Install libpq-dev (for PostgreSQL)
 RUN apt-get install -y libpq-dev
 
+# Isntalll for mysql
+RUN apt-get install -y pkg-config
+
 # Install bash
 RUN apt-get install -y bash
 
