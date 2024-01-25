@@ -52,8 +52,8 @@
 
 
 
--- Tạo user 'course' với mật khẩu 'course'
-CREATE USER course WITH PASSWORD 'course';
+    -- Tạo user 'course' với mật khẩu 'course'
+    CREATE USER course WITH PASSWORD 'course';
 
--- Tạo database 'course' với chủ sở hữu là user 'course'
-CREATE DATABASE course WITH OWNER = course;
+    -- Tạo database 'course' với chủ sở hữu là user 'course'
+    CREATE DATABASE course WITH OWNER = course;
